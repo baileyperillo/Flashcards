@@ -82,18 +82,19 @@ const App = () => {
   //updates count number when you press "Next Card" button; resets user
   //previously handleClick
   const clickNext = () => { 
-    setCount((prev) => Math.max(prev + 1));
+    setCount((prev) => Math.min(prev + 1));
     setForceFlipReset(true);
     setUserGuess('');
     setIsCorrect(null);
+
   }
   //go to previous card
-  const clickPrev = () => { 
-    setForceFlipReset(true);
-    setCardCount(prev => Math.min(prev - 1 + cardData.length));
-    setUserGuess('');
-    setIsCorrect(null);
-  }
+  const clickPrev = () => {
+  setForceFlipReset(true);
+  setCount(prev => Math.max(0, prev - 1)); // Never goes below 0
+  setUserGuess('');
+  setIsCorrect(null);
+};
 
 
   return (
