@@ -65,6 +65,7 @@ const App = () => {
   const [userGuess, setUserGuess] = useState('');
   const [isCorrect, setIsCorrect] = useState(null);
   const [score, setScore] = useState(0); //used for displaying score of correct answers
+  const [isFlipped, setIsFlipped] = useState(false); // Track flip state if needed
 
 
   const checkAnswer = () => {   //Check the input answer is correct
@@ -77,16 +78,24 @@ const App = () => {
     }
   };
 
+  //flips card back to front before moving to next card
+  const handleNext = () => {
+    if (isFlipped) {
+      setForceFlipReset(true); // Trigger flip back
+      // Wait for Card to notify us when flip completes
+    }else {
+      clickNextCard(); // Immediately advance if already facing front
+    }
 
+  }
   
   //updates count number when you press "Next Card" button; resets user
   //previously handleClick
-  const clickNext = () => { 
-    setCount((prev) => Math.min(prev + 1));
-    setForceFlipReset(true);
-    setUserGuess('');
-    setIsCorrect(null);
-
+  const clickNextCard = () => {
+  setIsFlipped(false); //reset flip on next
+  setCount(prev => Math.min(prev + 1)); 
+  setUserGuess('');
+  setIsCorrect(null);
   }
   //go to previous card
   const clickPrev = () => {
@@ -114,11 +123,11 @@ const App = () => {
             imgURL={cardData[cardCount].url}
             currentIndex={cardCount}
             totalCards={totalCards}
-            forceFlipReset={forceFlipReset}
-            onFlipResetComplete={() => setForceFlipReset(false)}
             //check if this is correct - Part 2
             isCorrect={isCorrect}
-            
+            //trigger flipping cards back
+            forceFlipReset={forceFlipReset}
+            onFlipResetComplete={() => setForceFlipReset(false)}
           />
 
           <div className="input-selection">
@@ -146,7 +155,7 @@ const App = () => {
               disabled={cardCount === 0} // Disable on first card 
               >Back Card</button>
 
-              <button type= "button" className = "button" onClick={clickNext}
+              <button type= "button" className = "button" onClick={clickNextCard}
               disabled={cardCount === cardData.length - 1} // Disable on last card
               >Next Card</button>
             </div>
