@@ -157,25 +157,27 @@ transform: perspective(1000px) rotateX(var(--rotate-X, 0));
   margin-top: 20px;
 }
 
-.input.correct {
+/*input box condition colors*/
+.input.true {
   border-color: green;
   background-color: #f0fff0;
 }
 
-.input.incorrect {
+.input.false {
   border-color: red;
   background-color: #fff0f0;
 }
 
+/*feedback message and condition colors*/
 .feedback {
   margin: 10px 0;
   font-weight: bold;
 }
 
-.feedback.correct {
+.feedback.true {
   color: green;
 }
 
-.feedback.incorrect {
+.feedback.false {
   color: red;
 }

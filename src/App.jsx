@@ -65,10 +65,16 @@ const App = () => {
   const [userGuess, setUserGuess] = useState('');
   const [isCorrect, setIsCorrect] = useState(null);
   const [score, setScore] = useState(0); //used for displaying score of correct answers
-  const [isFlipped, setIsFlipped] = useState(false); // Track flip state if needed
+  const [isFlipped, setIsFlipped] = useState(false); // Track flip state if needed - will use later
 
 
   const checkAnswer = () => {   //Check the input answer is correct
+    //skip first card
+    if (cardCount === 0) {
+      setIsCorrect(null); // Optional: don't show feedback for start card
+      return;
+    }
+
      //remove case sensitivity
     if (userGuess.toLowerCase() === cardData[cardCount].answer.toLowerCase()) {
       setIsCorrect(true);
@@ -79,7 +85,8 @@ const App = () => {
   };
 
   //flips card back to front before moving to next card
-  const handleNext = () => {
+  
+  /*const handleNext = () => {
     if (isFlipped) {
       setForceFlipReset(true); // Trigger flip back
       // Wait for Card to notify us when flip completes
@@ -87,7 +94,7 @@ const App = () => {
       clickNextCard(); // Immediately advance if already facing front
     }
 
-  }
+  }*/
   
   //updates count number when you press "Next Card" button; resets user
   //previously handleClick
@@ -115,6 +122,10 @@ const App = () => {
         <h5>Number of Cards: {totalCards}</h5> {/*cardData.length*/}
       </div>
 
+      <div className="score-display">
+        Score: {score}/{cardData.length - 1} {/* Subtract 1 to exclude start card */}
+      </div>
+
       {cardData.length > 0 && (
         <>
           <Card 
@@ -135,7 +146,7 @@ const App = () => {
             <input 
               id = "guess-input"
               type="text" 
-              className={`input ${isCorrect ? 'correct' : isCorrect === false ? 'incorrect' : ''}`}
+              className={`input ${isCorrect ? 'true' : isCorrect === false ? 'false' : ''}`}
               //look up what this means
               value={userGuess}//connects the state of the component with the value of the <input>
               onChange= {     //updates the component's state as the user enters data
