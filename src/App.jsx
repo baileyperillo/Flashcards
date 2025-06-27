@@ -58,7 +58,7 @@ const App = () => {
   ];
 
   const [cardCount, setCount] = useState(0); {/*This is to count the cards*/}
-  const [forceFlipReset, setForceFlipReset] = useState(false);
+  //const [forceFlipReset, setForceFlipReset] = useState(false);
   const totalCards = cardData.length; {/*In case totalCards will be changed */}
 
   //used for input
@@ -81,7 +81,7 @@ const App = () => {
   //flips card back to front before moving to next card
   const handleNext = () => {
     if (isFlipped) {
-      setForceFlipReset(true); // Trigger flip back
+      //setForceFlipReset(true); // Trigger flip back
       // Wait for Card to notify us when flip completes
     }else {
       clickNextCard(); // Immediately advance if already facing front
@@ -99,7 +99,8 @@ const App = () => {
   }
   //go to previous card
   const clickPrev = () => {
-  setForceFlipReset(true);
+  //setForceFlipReset(true);
+  setIsFlipped(true);
   setCount(prev => Math.max(0, prev - 1)); // Never goes below 0
   setUserGuess('');
   setIsCorrect(null);
@@ -126,8 +127,10 @@ const App = () => {
             //check if this is correct - Part 2
             isCorrect={isCorrect}
             //trigger flipping cards back
-            forceFlipReset={forceFlipReset}
-            onFlipResetComplete={() => setForceFlipReset(false)}
+            isFlipped = {flipped}
+            onFlip={() => setIsFlipped(false)}
+            //forceFlipReset={forceFlipReset}
+            //onFlipResetComplete={() => setForceFlipReset(false)}
           />
 
           <div className="input-selection">
